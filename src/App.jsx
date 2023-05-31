@@ -29,7 +29,8 @@ const ContainerText = styled.div`
  height: auto;
  align-items: center;
  justify-content: center;
- color: black;
+ color: #404040;
+ font-family: 'Open Sans';
 
 
  @media screen and (max-width: 800px){
@@ -75,7 +76,7 @@ const Image = styled.img`
   }
 `
 const ViewsSpan = styled.div`  
-   color: black;
+   color: #333333;
    margin-top: 15px;
 
    @media screen and (max-width: 800px){
@@ -103,7 +104,7 @@ function App() {
         <Image src={flores} alt="flores" />
 
         <AuthorContainer >
-          <p style={{ color: 'black', }}>
+          <p style={{ color: '#333333', }}>
             <strong >
               Autor:
             </strong>
