@@ -19,8 +19,6 @@ const Container = styled.div`
   justify-content: flex-start;
   margin-top: 32px;
 
-
-
   }
 `
 
@@ -34,11 +32,15 @@ const AuthorContainer = styled.div`
      color: black;
 
 
+
+
  @media screen and (max-width: 800px){
     /* margin-left: 410px; */
     font-size: 15px;
 flex-direction: column;
 align-items: center;
+width: 11rem;
+
   }
 `
 
