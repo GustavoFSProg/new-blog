@@ -101,7 +101,7 @@ function App() {
 
       <Header />
       <Container>
-        <h1 style={{ color: 'black' }}>Como Cultivar Flores</h1>
+        <h1 style={{ color: '#333333' }}>Como Cultivar Flores</h1>
         <Image src={flores} alt="flores" />
 
         <AuthorContainer >
