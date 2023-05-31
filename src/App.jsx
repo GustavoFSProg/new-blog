@@ -22,6 +22,21 @@ const Container = styled.div`
   }
 `
 
+const ContainerText = styled.div` 
+ display: flex;
+ flex-direction: column;
+ width: 55%;
+ height: auto;
+ align-items: center;
+ justify-content: center;
+ color: black;
+
+
+ @media screen and (max-width: 800px){
+  width: 85%;
+
+  }
+`
 const AuthorContainer = styled.div` 
  display: flex;
  
@@ -88,7 +103,7 @@ function App() {
         <Image src={flores} alt="flores" />
 
         <AuthorContainer >
-          <p style={{ color: 'black' }}>
+          <p style={{ color: 'black', }}>
             <strong >
               Autor:
             </strong>
@@ -107,6 +122,22 @@ function App() {
             </span>
           </ViewsSpan>
         </AuthorContainer>
+        <ContainerText >
+          <p style={{ textIndent: '17px' }}>
+
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+            when an unknown printer took a galley of type and scrambled it to make a type
+            specimen book. It has survived not only five centuries,
+            but also the leap into electronic typesetting, remaining essentially unchanged.
+            It was popularised in the 1960s with the release of Letraset sheets containing Lorem
+            Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker
+            including versions of Lorem Ipsum.
+            It was popularised in the 1960s with the release of Letraset sheets containing Lorem
+            Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker
+            including versions of Lorem Ipsum.
+          </p>
+        </ContainerText>
       </Container>
 
     </>
