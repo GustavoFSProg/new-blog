@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import styled from 'styled-components'
 import flores from './assets/flores.jpg'
+import Header from './components/header/Header'
 
 const Container = styled.div` 
  display: flex;
@@ -73,13 +74,14 @@ function App() {
 
   return (
     <>
-      <div style={{
+      {/* <div style={{
         display: 'flex',
         width: '100vw', height: '45px', background: 'green'
       }}>
-        afasdf
-      </div>
+      afasdf
+    </div> */}
 
+      <Header />
       <Container>
         <Image src={flores} alt="flores" />
 
