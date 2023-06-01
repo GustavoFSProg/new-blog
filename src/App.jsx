@@ -3,6 +3,7 @@ import './App.css'
 import styled from 'styled-components'
 import flores from './assets/flores.jpg'
 import Header from './components/header/Header'
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 
 const Container = styled.div` 
  display: flex;
@@ -86,6 +87,19 @@ const ViewsSpan = styled.div`
   }
 `
 
+const ViewsSpanLikes = styled.div`  
+   color: #333333;
+   /* margin-top: 1px; */
+   align-items: center;
+   justify-content: center;
+   display: flex;
+
+   @media screen and (max-width: 800px){
+   
+  margin-top: 5px;
+
+  }
+`
 
 function App() {
   const [count, setCount] = useState(0)
@@ -123,6 +137,25 @@ function App() {
               36
             </span>
           </ViewsSpan>
+
+
+          <ViewsSpanLikes >
+
+            <button onClick={() => alert("Like Clicado")}
+              style={{
+                border: 'none',
+                background: 'none', cursor: 'pointer'
+              }}>
+
+              <ThumbUpAltIcon color="primary" style={{ fontSize: "28px" }} />
+            </button>
+
+            <strong >
+              14
+            </strong>
+
+          </ViewsSpanLikes>
+
         </AuthorContainer>
         <ContainerText >
           <p style={{ textIndent: '17px' }}>
