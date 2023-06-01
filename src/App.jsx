@@ -19,7 +19,7 @@ const Container = styled.div`
   /* justify-content: center; */
   justify-content: flex-start;
   margin-top: 32px;
- height: 56rem;
+ height: 58rem;
 
 
   }
