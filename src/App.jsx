@@ -55,7 +55,7 @@ const AuthorContainer = styled.div`
     /* margin-left: 410px; */
     font-size: 15px;
 flex-direction: column;
-align-items: center;
+/* align-items: center; */
 width: 11rem;
 
   }
@@ -97,6 +97,8 @@ const ViewsSpanLikes = styled.div`
    @media screen and (max-width: 800px){
    
   margin-top: 5px;
+  justify-content: left;
+
 
   }
 `
