@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import styled from 'styled-components'
 import flores from './assets/flores.jpg'
 import Header from './components/header/Header'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
+import api from './api'
 
 const Container = styled.div` 
  display: flex;
@@ -122,7 +123,23 @@ const ViewsSpanLikes = styled.div`
 `
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [posts, setPosts] = useState([])
+
+  async function HandleGetAllPosts() {
+    const { data } = await api.get('/get-all-posts')
+
+    setPosts(data.data)
+
+    console.log(data.data)
+
+    return posts
+
+
+  }
+
+  useEffect(() => {
+    HandleGetAllPosts()
+  }, [])
 
   return (
     <>
@@ -135,74 +152,80 @@ function App() {
 
       <Header />
       <Container>
-        <H1 >Como Cultivar Flores</H1>
-        <Image src={flores} alt="flores" />
+        {posts.map(item => {
+          return (
+            <div key={item.id}>
 
-        <AuthorContainer >
-          <p style={{ color: '#333333', }}>
-            <strong >
-              Autor:
-            </strong>
-            <span style={{ marginLeft: '8px' }} >
+              <H1 >{item.title}</H1>
+              <Image src={item.image} alt="flores" />
 
-              Vera Sanches
-            </span>
-          </p>
-          <ViewsSpan >
-            <strong >
-              Views:
-            </strong>
-            <span style={{ marginLeft: '8px' }} >
+              <AuthorContainer >
+                <p style={{ color: '#333333', }}>
+                  <strong >
+                    Autor:
+                  </strong>
+                  <span style={{ marginLeft: '8px' }} >
 
-              36
-            </span>
-          </ViewsSpan>
+                    {item.author}
+                  </span>
+                </p>
+                <ViewsSpan >
+                  <strong >
+                    Views:
+                  </strong>
+                  <span style={{ marginLeft: '8px' }} >
+
+                    {item.views}
+
+                  </span>
+                </ViewsSpan>
 
 
-          <ViewsSpanLikes >
+                <ViewsSpanLikes >
 
-            <button onClick={() => alert("Like Clicado")}
-              style={{
-                border: 'none',
-                background: 'none', cursor: 'pointer'
-              }}>
+                  <button onClick={() => alert("Like Clicado")}
+                    style={{
+                      border: 'none',
+                      background: 'none', cursor: 'pointer'
+                    }}>
 
-              <ThumbUpAltIcon color="primary" style={{ fontSize: "27px" }} />
-            </button>
+                    <ThumbUpAltIcon color="primary" style={{ fontSize: "27px" }} />
+                  </button>
 
-            <strong >
-              14
-            </strong>
+                  <strong >
+                    {item.likes}
 
-          </ViewsSpanLikes>
+                  </strong>
 
-        </AuthorContainer>
-        <ContainerText >
-          <div style={{
-            display: 'flex',
+                </ViewsSpanLikes>
 
-            flexDirection: 'column'
-          }}>
-            <p style={{ textIndent: '17px' }}>
+              </AuthorContainer>
 
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-              when an unknown printer took a galley of type and scrambled it to make a type
-              specimen book. It has survived not only five centuries,
-              but also the leap into electronic typesetting, remaining essentially unchanged.
-              It was popularised in the 1960s with the release of Letraset sheets containing Lorem
-              Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker
-              including versions of Lorem Ipsum.
-              It was popularised in the 1960s with the release of Letraset sheets containing Lorem
-              Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker
-              including versions of Lorem Ipsum.
-            </p>
+              <ContainerText >
+                <div style={{
+                  display: 'flex',
 
-            <strong style={{ fontSize: '15px', marginLeft: '10px' }}>
-              14/10/2022
-            </strong>
-          </div>
-        </ContainerText>
+                  flexDirection: 'column'
+                }}>
+                  <p style={{ textIndent: '17px' }}>
+
+                    {item.text}
+                  </p>
+
+                  <strong style={{ fontSize: '15px', marginLeft: '10px' }}>
+                    {item.createdAt}
+                  </strong>
+                </div>
+              </ContainerText>
+            </div>
+
+
+
+          )
+        })}
+
+
+
         <br />
         <br />
       </Container >
