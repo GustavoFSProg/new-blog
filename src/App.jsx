@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import styled from 'styled-components'
-import flores from './assets/flores.jpg'
 import Header from './components/header/Header'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import api from './api'
+import moment from 'moment'
 
 const Container = styled.div` 
  display: flex;
@@ -14,6 +14,7 @@ const Container = styled.div`
  /* background: green; */
  align-items: center;
  justify-content: center;
+ margin-top: 200px; 
 
 
  @media screen and (max-width: 800px){
@@ -137,6 +138,10 @@ function App() {
 
   }
 
+  function getDateWithoutTime(date) {
+    return moment(date).format('DD-MM-YYYY')
+  }
+
   useEffect(() => {
     HandleGetAllPosts()
   }, [])
@@ -154,9 +159,9 @@ function App() {
       <Container>
         {posts.map(item => {
           return (
-            <div key={item.id}>
+            <>
 
-              <H1 >{item.title}</H1>
+              <H1 key={item.id}>{item.title}</H1>
               <Image src={item.image} alt="flores" />
 
               <AuthorContainer >
@@ -213,11 +218,11 @@ function App() {
                   </p>
 
                   <strong style={{ fontSize: '15px', marginLeft: '10px' }}>
-                    {item.createdAt}
+                    {getDateWithoutTime(item.createdAt)}
                   </strong>
                 </div>
               </ContainerText>
-            </div>
+            </>
 
 
 
