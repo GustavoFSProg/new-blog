@@ -25,6 +25,22 @@ const Container = styled.div`
   }
 `
 
+
+
+const H1 = styled.h1` 
+ /* display: flex; */
+ color: #333333;
+  margin-top: 83px;
+  margin-bottom: 24px;
+
+
+ @media screen and (max-width: 800px){
+  margin-top: 3px;
+
+
+  }
+`
+
 const ContainerText = styled.div` 
  display: flex;
  flex-direction: column;
@@ -119,7 +135,7 @@ function App() {
 
       <Header />
       <Container>
-        <h1 style={{ color: '#333333' }}>Como Cultivar Flores</h1>
+        <H1 >Como Cultivar Flores</H1>
         <Image src={flores} alt="flores" />
 
         <AuthorContainer >
