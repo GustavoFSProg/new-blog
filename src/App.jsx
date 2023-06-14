@@ -23,7 +23,6 @@ const Container = styled.div`
   margin-top: 32px;
  height: 58rem;
 
-
   }
 `
 
@@ -125,6 +124,7 @@ const ViewsSpanLikes = styled.div`
 
 function App() {
   const [posts, setPosts] = useState([])
+  const [buttonAbled, setButtonAbled] = useState(false)
 
   async function HandleGetAllPosts() {
     const { data } = await api.get('/get-all-posts')
@@ -134,6 +134,31 @@ function App() {
     console.log(data.data)
 
     return posts
+
+
+  }
+
+
+  // async function handleLikes(id) {
+  //   await api.put(`/likes/${id}`)
+  //   handlePosts()
+
+  //   setButtonAbled(true)
+  // }
+
+
+  async function UpdateLikes(id) {
+    await api.put(`/update-likes/${id}`)
+
+    // console.log(data.data)
+
+    // alert("Like button updated!")
+
+    setButtonAbled(true)
+
+    HandleGetAllPosts()
+
+    return null
 
 
   }
@@ -188,7 +213,7 @@ function App() {
 
                 <ViewsSpanLikes >
 
-                  <button onClick={() => alert("Like Clicado")}
+                  <button disabled={buttonAbled} onClick={() => UpdateLikes(item.id)}
                     style={{
                       border: 'none',
                       background: 'none', cursor: 'pointer'
@@ -197,10 +222,14 @@ function App() {
                     <ThumbUpAltIcon color="primary" style={{ fontSize: "27px" }} />
                   </button>
 
+
                   <strong >
                     {item.likes}
 
                   </strong>
+
+
+
 
                 </ViewsSpanLikes>
 
