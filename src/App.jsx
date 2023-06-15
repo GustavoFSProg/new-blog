@@ -5,6 +5,7 @@ import Header from './components/header/Header'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import api from './api'
 import moment from 'moment'
+import { Link } from 'react-router-dom'
 
 const Container = styled.div` 
  display: flex;
@@ -14,7 +15,7 @@ const Container = styled.div`
  /* background: green; */
  align-items: center;
  justify-content: center;
- margin-top: 200px; 
+ /* margin-top: 200px;  */
 
 
  @media screen and (max-width: 800px){
@@ -139,6 +140,15 @@ function App() {
   }
 
 
+  // async function LocalStorage(id) {
+  //   localStorage.setItem("ID", id)
+
+  //   return true
+
+
+  // }
+
+
   // async function handleLikes(id) {
   //   await api.put(`/likes/${id}`)
   //   handlePosts()
@@ -163,6 +173,25 @@ function App() {
 
   }
 
+
+  async function UpdateViews(id) {
+    localStorage.setItem("ID", id)
+    await api.put(`/update-views/${id}`)
+
+
+
+    // console.log(data.data)
+
+    // alert("Like button updated!")
+
+
+
+    return null
+
+
+  }
+
+
   function getDateWithoutTime(date) {
     return moment(date).format('DD-MM-YYYY')
   }
@@ -181,13 +210,17 @@ function App() {
     </div> */}
 
       <Header />
-      <Container>
-        {posts.map(item => {
-          return (
-            <>
+      {posts.map(item => {
+        return (
+          <>
+            <Container>
+
 
               <H1 key={item.id}>{item.title}</H1>
-              <Image src={item.image} alt="flores" />
+              <Link to="/profile" onClick={() => UpdateViews(item.id)} style={{ textDecoration: 'none' }}>
+                <Image src={item.image} alt="flores" />
+
+              </Link>
 
               <AuthorContainer >
                 <p style={{ color: '#333333', }}>
@@ -213,13 +246,14 @@ function App() {
 
                 <ViewsSpanLikes >
 
-                  <button disabled={buttonAbled} onClick={() => UpdateLikes(item.id)}
+                  <button disabled={true} onClick={() => UpdateLikes(item.id)}
+                    // <button disabled={buttonAbled} onClick={() => UpdateLikes(item.id)}
                     style={{
                       border: 'none',
-                      background: 'none', cursor: 'pointer'
+                      background: 'none',
                     }}>
 
-                    <ThumbUpAltIcon color="primary" style={{ fontSize: "27px" }} />
+                    <ThumbUpAltIcon color="gray" style={{ fontSize: "27px" }} />
                   </button>
 
 
@@ -236,33 +270,35 @@ function App() {
               </AuthorContainer>
 
               <ContainerText >
-                <div style={{
-                  display: 'flex',
+                <Link to="/profile" onClick={() => LocalStorage(item.id)} style={{ textDecoration: 'none' }}>
+                  <div style={{
+                    display: 'flex',
 
-                  flexDirection: 'column'
-                }}>
-                  <p style={{ textIndent: '17px' }}>
+                    flexDirection: 'column'
+                  }}>
+                    <p style={{ textIndent: '17px', color: '#4d4d4d' }}>
 
-                    {item.text}
-                  </p>
+                      {item.text}
+                    </p>
 
-                  <strong style={{ fontSize: '15px', marginLeft: '10px' }}>
-                    {getDateWithoutTime(item.createdAt)}
-                  </strong>
-                </div>
+                    <strong style={{ fontSize: '15px', marginLeft: '10px', color: '#4d4d4d' }}>
+                      {getDateWithoutTime(item.createdAt)}
+                    </strong>
+                  </div>
+                </ Link >
               </ContainerText>
-            </>
+            </Container >
+          </>
 
 
 
-          )
-        })}
+        )
+      })}
 
 
 
-        <br />
-        <br />
-      </Container >
+      <br />
+      <br />
 
     </>
   )
