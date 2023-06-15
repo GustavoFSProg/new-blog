@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import styled from 'styled-components'
-import flores from './assets/flores.jpg'
 import Header from './components/header/Header'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
+import api from './api'
+import moment from 'moment'
+import { Link } from 'react-router-dom'
 
 const Container = styled.div` 
  display: flex;
@@ -13,6 +15,7 @@ const Container = styled.div`
  /* background: green; */
  align-items: center;
  justify-content: center;
+ /* margin-top: 200px;  */
 
 
  @media screen and (max-width: 800px){
@@ -20,7 +23,6 @@ const Container = styled.div`
   justify-content: flex-start;
   margin-top: 32px;
  height: 58rem;
-
 
   }
 `
@@ -122,7 +124,81 @@ const ViewsSpanLikes = styled.div`
 `
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [posts, setPosts] = useState([])
+  const [buttonAbled, setButtonAbled] = useState(false)
+
+  async function HandleGetAllPosts() {
+    const { data } = await api.get('/get-all-posts')
+
+    setPosts(data.data)
+
+    console.log(data.data)
+
+    return posts
+
+
+  }
+
+
+  // async function LocalStorage(id) {
+  //   localStorage.setItem("ID", id)
+
+  //   return true
+
+
+  // }
+
+
+  // async function handleLikes(id) {
+  //   await api.put(`/likes/${id}`)
+  //   handlePosts()
+
+  //   setButtonAbled(true)
+  // }
+
+
+  async function UpdateLikes(id) {
+    await api.put(`/update-likes/${id}`)
+
+    // console.log(data.data)
+
+    // alert("Like button updated!")
+
+    setButtonAbled(true)
+
+    HandleGetAllPosts()
+
+    return null
+
+
+  }
+
+
+  async function UpdateViews(id) {
+    localStorage.setItem("ID", id)
+    await api.put(`/update-views/${id}`)
+
+
+
+    // console.log(data.data)
+
+    // alert("Like button updated!")
+
+
+
+    return null
+
+
+  }
+
+
+  function getDateWithoutTime(date) {
+    return moment(date).format('DD-MM-YYYY')
+  }
+
+  useEffect(() => {
+    HandleGetAllPosts()
+  }, [])
 
   return (
     <>
@@ -134,78 +210,95 @@ function App() {
     </div> */}
 
       <Header />
-      <Container>
-        <H1 >Como Cultivar Flores</H1>
-        <Image src={flores} alt="flores" />
-
-        <AuthorContainer >
-          <p style={{ color: '#333333', }}>
-            <strong >
-              Autor:
-            </strong>
-            <span style={{ marginLeft: '8px' }} >
-
-              Vera Sanches
-            </span>
-          </p>
-          <ViewsSpan >
-            <strong >
-              Views:
-            </strong>
-            <span style={{ marginLeft: '8px' }} >
-
-              36
-            </span>
-          </ViewsSpan>
+      {posts.map(item => {
+        return (
+          <>
+            <Container>
 
 
-          <ViewsSpanLikes >
+              <H1 key={item.id}>{item.title}</H1>
+              <Link to="/profile" onClick={() => UpdateViews(item.id)} style={{ textDecoration: 'none' }}>
+                <Image src={item.image} alt="flores" />
 
-            <button onClick={() => alert("Like Clicado")}
-              style={{
-                border: 'none',
-                background: 'none', cursor: 'pointer'
-              }}>
+              </Link>
 
-              <ThumbUpAltIcon color="primary" style={{ fontSize: "27px" }} />
-            </button>
+              <AuthorContainer >
+                <p style={{ color: '#333333', }}>
+                  <strong >
+                    Autor:
+                  </strong>
+                  <span style={{ marginLeft: '8px' }} >
 
-            <strong >
-              14
-            </strong>
+                    {item.author}
+                  </span>
+                </p>
+                <ViewsSpan >
+                  <strong >
+                    Views:
+                  </strong>
+                  <span style={{ marginLeft: '8px' }} >
 
-          </ViewsSpanLikes>
+                    {item.views}
 
-        </AuthorContainer>
-        <ContainerText >
-          <div style={{
-            display: 'flex',
+                  </span>
+                </ViewsSpan>
 
-            flexDirection: 'column'
-          }}>
-            <p style={{ textIndent: '17px' }}>
 
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-              when an unknown printer took a galley of type and scrambled it to make a type
-              specimen book. It has survived not only five centuries,
-              but also the leap into electronic typesetting, remaining essentially unchanged.
-              It was popularised in the 1960s with the release of Letraset sheets containing Lorem
-              Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker
-              including versions of Lorem Ipsum.
-              It was popularised in the 1960s with the release of Letraset sheets containing Lorem
-              Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker
-              including versions of Lorem Ipsum.
-            </p>
+                <ViewsSpanLikes >
 
-            <strong style={{ fontSize: '15px', marginLeft: '10px' }}>
-              14/10/2022
-            </strong>
-          </div>
-        </ContainerText>
-        <br />
-        <br />
-      </Container >
+                  <button disabled={true} onClick={() => UpdateLikes(item.id)}
+                    // <button disabled={buttonAbled} onClick={() => UpdateLikes(item.id)}
+                    style={{
+                      border: 'none',
+                      background: 'none',
+                    }}>
+
+                    <ThumbUpAltIcon color="gray" style={{ fontSize: "27px" }} />
+                  </button>
+
+
+                  <strong >
+                    {item.likes}
+
+                  </strong>
+
+
+
+
+                </ViewsSpanLikes>
+
+              </AuthorContainer>
+
+              <ContainerText >
+                <Link to="/profile" onClick={() => LocalStorage(item.id)} style={{ textDecoration: 'none' }}>
+                  <div style={{
+                    display: 'flex',
+
+                    flexDirection: 'column'
+                  }}>
+                    <p style={{ textIndent: '17px', color: '#4d4d4d' }}>
+
+                      {item.text}
+                    </p>
+
+                    <strong style={{ fontSize: '15px', marginLeft: '10px', color: '#4d4d4d' }}>
+                      {getDateWithoutTime(item.createdAt)}
+                    </strong>
+                  </div>
+                </ Link >
+              </ContainerText>
+            </Container >
+          </>
+
+
+
+        )
+      })}
+
+
+
+      <br />
+      <br />
 
     </>
   )

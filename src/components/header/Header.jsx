@@ -68,9 +68,9 @@ function Header() {
         <div style={{ marginLeft: '35px' }}>
           <Link
             style={{ textDecoration: 'none', fontFamily: 'Roboto', color: 'black  ' }}
-            to="/login"
+            to="/profile"
           >
-            LOGIN
+            PERFIL
           </Link>
         </div>
 
